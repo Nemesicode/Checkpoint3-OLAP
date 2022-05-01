@@ -1,0 +1,23 @@
+1-Total des ventes par pays
+SELECT country, SUM(amount)
+FROM Sales
+WHERE year = 2014
+GROUP BY ROLLUP(country)
+
+2-Montant des ventes
+SELECT month, year, SUM(amount) AS sum_amount
+FROM Sales
+WHERE year = 2014
+GROUP BY GROUPING SETS((month,year),year,sum_amount)
+
+3-Quantite produit vendu
+SELECT "ecran 22 pouces", country, year, SUM(amount) AS sum_amount
+FROM Sales
+WHERE year = 2014
+GROUP BY GROUPING SETS(("ecran 22 pouces", country),("ecran 22 pouces", year),(year, country),sum_amount)
+
+4-Montant vente par pays,annee puis produit
+SELECT country, year, product, SUM(amount) AS sum_amount
+FROM Sales
+WHERE year = 2014
+GROUP BY ROLLUP (country, year, product) ;
